@@ -8,10 +8,9 @@ Signal_df = pd.read_excel("D:\Academics\EE 405\August Start\Intruder Detection\M
 lengths = list(Signal_df)
 
 for i in range(31):
-    SignalData = Signal_df.iloc[0:188, i]
+    SignalData = Signal_df.iloc[0:188, i].values
     newSignal = signal_arrange(SignalData)
     FilterSignal = filter_fir(newSignal)
-    print(type(newSignal))
     figure(i)
     plot(newSignal)
     plot(FilterSignal)
