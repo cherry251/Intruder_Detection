@@ -1,5 +1,11 @@
 # Intruder_Detection
-EE-405 Intruder Detection Code
+Intruder Detection Through Walking Pattern Analysis
 
-Author : Charitha Dhananjaya
-Final Code
+[EE-405 Undergraduate Project]
+
+Author :  Charitha Dhananjaya
+          Department of Electrical and Electronic Engineering
+          University of Peradeniya
+          Sri Lanka.
+
+Please refer into the IEEE HTC [Submitted] Paper in the dir.
