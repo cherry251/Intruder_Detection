@@ -4,13 +4,29 @@
 # Time between each peaks
 
 import numpy as np
-from scipy.signal import find_peaks_cwt
+from myfunctions import peak_detector
 
 
-def find_peaks(filtered_signal, signal_index):
+def find_peaks(filtered_signal):
 
-    indexes = find_peaks_cwt(filtered_signal, np.arange(1, 550), min_length=50)
+    t = range(188)
+    max, min = peak_detector(filtered_signal, 0.0, 0.0005, t)  # Calculating the peaks
+    xmax = np.zeros(len(max))  # Maximum indexes
+    ymax = np.zeros(len(max))  # Maximum values
+    xmin = np.zeros(len(min))  # Minimum indexes
+    ymin = np.zeros(len(min))  # Minimum values
 
-    if indexes.size != 0:
-        print(signal_index)
-        print(indexes[0:2])
+    for i in range(len(max)):
+        np.put(xmax, i, max[i][0])
+        np.put(ymax, i, max[i][1])
+
+    for j in range(len(min)):
+        np.put(xmin, j, min[j][0])
+        np.put(ymin, j, min[j][1])
+
+    xmax = [ele*0.02 for ele in xmax]  # Adjusting to time series
+    xmin = [ele*0.02 for ele in xmin]  # Adjusting to time series
+
+    return xmax, ymax, xmin, ymin
+
+
