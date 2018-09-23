@@ -19,6 +19,8 @@ def filter_fir(signal_data):  # Design of FIR Filter for Smoothing the Signal
 
 def signal_arrange(raw_signal):
 
+
+    sample_rate = 50
     sensitivity = 0.000125  # V/bit | Convert to a Voltage Signal
 
     raw_signal = [ele*sensitivity for ele in raw_signal]
