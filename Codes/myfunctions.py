@@ -11,16 +11,16 @@ from pylab import *
 def signal_arrange(signal_data):
 
     sensitivity = 0.000125  # V/bit | Convert to a Voltage Signal
-    time = range(188)
-    time = [ele*0.02 for ele in time]
+    time_series = range(188)
+    time_series = [ele*0.02 for ele in time_series]
 
     signal_data = [ele*sensitivity for ele in signal_data]
-    mean = sum(signal_data)/len(signal_data)
+    mean_value = sum(signal_data)/len(signal_data)
 
     # Removing the Mean from the Signal
-    new_signal = [ele-mean for ele in signal_data]
+    new_signal = [ele-mean_value for ele in signal_data]
 
-    return time, new_signal
+    return time_series, new_signal, mean_value
 
 
 def filter_fir(signal):  # Design of FIR Filter for Smoothing the Signal
