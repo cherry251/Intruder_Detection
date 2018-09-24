@@ -1,12 +1,13 @@
 import pandas as pd
-from pylab import figure, plot, show, grid
+from pylab import figure, plot, show, grid, stem
 from myfunctions import filter_fir, signal_arrange
 from timedomainfeatures import find_peaks, peaks_energy, peaks_stat, stride_time
+from frequencydomainfeatures import spectral_extracts
 
 Signal_df = pd.read_excel("D:\Academics\EE 405\August Start\Intruder Detection\MLCode\DataFiles\RawSignals.xlsx",
                           sheet_name=0)
 
-for i in range(31):
+for i in range(27):
 
     SignalData = Signal_df.iloc[0:188, i].values  # Extracting the signal
 
@@ -19,12 +20,22 @@ for i in range(31):
     avg_stride_time = stride_time(x_max, x_min)  # Calculating the average time per stride
 
     # Frequency Domain Features
+    norm_spectrum, norm_frequencies, power_spectrum, spec_centroid, avg_amplitude = spectral_extracts(filteredSignal)
+
+    print(norm_spectrum)
+    print("****")
+    print(spec_centroid, avg_amplitude)
 
     figure(i)
-    plot(Time, Signal)
-    plot(Time, filteredSignal)
-    plot(x_max, y_max, 'r+')
-    plot(x_min, y_min, 'g+')
+
+    # plot(Time, Signal)
+    # plot(Time, filteredSignal)
+    # plot(x_max, y_max, 'r+')
+    # plot(x_min, y_min, 'g+')
+
+    # stem(norm_spectrum, 'b')
+    # stem(power_spectrum, 'r')
+
     grid(True)
     show()
 
