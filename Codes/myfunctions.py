@@ -83,9 +83,12 @@ def peak_detector(v, delta, thresh, x):  # Signal, Delta Parameter, Threshold, I
     return maxtab, mintab  # Return 2 lists with index and value
 
 
-def feature_csv(x_max, y_max, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid, signal_power, person):
+def feature_csv(energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
+                avg_amplitude,signal_power, person):
 
-    csv_row = [x_max, y_max, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid, signal_power, person]
+    csv_row = [energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
+               avg_amplitude, signal_power, person]
+
     csv_file = "PersonData.csv"
 
     with open(csv_file, "a") as fp:
