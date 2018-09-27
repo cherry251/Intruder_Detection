@@ -6,6 +6,7 @@
 from scipy.signal import kaiserord, lfilter, firwin
 from math import isnan
 from pylab import *
+import csv
 
 
 def signal_arrange(signal_data):
@@ -82,5 +83,11 @@ def peak_detector(v, delta, thresh, x):  # Signal, Delta Parameter, Threshold, I
     return maxtab, mintab  # Return 2 lists with index and value
 
 
+def feature_csv(max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid, signal_power, person):
 
+    csv_row = [max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid, signal_power, person]
+    csv_file = "PersonData.csv"
 
+    with open(csv_file, "a") as fp:
+        wr = csv.writer(fp, dialect='excel')
+        wr.writerow(csv_row)

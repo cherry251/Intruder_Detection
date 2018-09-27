@@ -1,6 +1,7 @@
+import numpy as np
 import pandas as pd
 from pylab import figure, plot, show, grid, stem
-from myfunctions import filter_fir, signal_arrange
+from myfunctions import filter_fir, signal_arrange, feature_csv
 from timedomainfeatures import find_peaks, peaks_energy, peaks_stat, stride_time
 from frequencydomainfeatures import spectral_extracts
 
@@ -18,13 +19,15 @@ for i in range(27):
     energyMax, energyMin = peaks_energy(y_max, y_min)  # Calculating peak energy, sum(ele.*2) each max and min peaks
     max_mean, max_std, min_mean, min_std = peaks_stat(y_max, y_min)  # Calculating the means and std. of peaks
     avg_stride_time = stride_time(x_max, x_min)  # Calculating the average time per stride
+    person = 1
 
     # Frequency Domain Features
-    norm_spectrum, norm_frequencies, power_spectrum, spec_centroid, avg_amplitude = spectral_extracts(filteredSignal)
+    norm_spectrum, norm_frequencies, power_spectrum, spec_centroid, avg_amplitude, \
+        signal_power = spectral_extracts(filteredSignal)
+    # idx = np.argsort(norm_frequencies)
 
-    print(norm_spectrum)
-    print("****")
-    print(spec_centroid, avg_amplitude)
+    feature_csv(max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid, signal_power, person)
+    print("CSV write complete....!")
 
     figure(i)
 
@@ -33,8 +36,8 @@ for i in range(27):
     # plot(x_max, y_max, 'r+')
     # plot(x_min, y_min, 'g+')
 
-    # stem(norm_spectrum, 'b')
-    # stem(power_spectrum, 'r')
+    stem(norm_frequencies, norm_spectrum, 'b')
+    # stem(norm_frequencies, power_spectrum, 'r')
 
     grid(True)
     show()
