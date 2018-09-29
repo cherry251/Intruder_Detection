@@ -24,8 +24,8 @@ def find_peaks(filtered_signal):
         np.put(xmin, j, min[j][0])
         np.put(ymin, j, min[j][1])
 
-    xmax = [ele*0.02 for ele in xmax]  # Adjusting to time series
-    xmin = [ele*0.02 for ele in xmin]  # Adjusting to time series
+    xmax = [ele*0.01 for ele in xmax]  # Adjusting to time series
+    xmin = [ele*0.01 for ele in xmin]  # Adjusting to time series
 
     return xmax, ymax, xmin, ymin
 

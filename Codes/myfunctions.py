@@ -12,8 +12,8 @@ import csv
 def signal_arrange(signal_data):
 
     sensitivity = 0.000125  # V/bit | Convert to a Voltage Signal
-    time_series = range(188)
-    time_series = [ele*0.02 for ele in time_series]
+    time_series = range(400)
+    time_series = [ele*0.01 for ele in time_series]
 
     signal_data = [ele*sensitivity for ele in signal_data]
     mean_value = sum(signal_data)/len(signal_data)
@@ -26,7 +26,7 @@ def signal_arrange(signal_data):
 
 def filter_fir(signal):  # Design of FIR Filter for Smoothing the Signal
 
-    sample_rate = 110.0  # Sample Rate keep as 110Hz because Data Sample Rate is 50 Hz
+    sample_rate = 230.0  # Sample Rate keep as 110Hz because Data Sample Rate is 50 Hz
     nyq_rate = sample_rate / 2.0
 
     width = 10.0 / nyq_rate
@@ -35,7 +35,7 @@ def filter_fir(signal):  # Design of FIR Filter for Smoothing the Signal
 
     cutoff_hz = 15.0
     taps = firwin(n, cutoff_hz / nyq_rate, window=('kaiser', beta))
-    filtered_signal = lfilter(taps, 0.5, signal)  # Filtering the signal with FIR LPF
+    filtered_signal = lfilter(taps, 0.1, signal)  # Filtering the signal with FIR LPF
 
     return filtered_signal
 
@@ -83,13 +83,13 @@ def peak_detector(v, delta, thresh, x):  # Signal, Delta Parameter, Threshold, I
     return maxtab, mintab  # Return 2 lists with index and value
 
 
-def feature_csv(energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
+def feature_csv(dc_level, energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
                 avg_amplitude,signal_power, person):
 
-    csv_row = [energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
+    csv_row = [dc_level, energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
                avg_amplitude, signal_power, person]
 
-    csv_file = "PersonData.csv"
+    csv_file = "intruder.csv"
 
     with open(csv_file, "a") as fp:
         wr = csv.writer(fp, dialect='excel')
