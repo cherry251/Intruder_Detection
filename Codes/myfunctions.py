@@ -12,7 +12,7 @@ import csv
 def signal_arrange(signal_data):
 
     sensitivity = 0.000125  # V/bit | Convert to a Voltage Signal
-    time_series = range(400)
+    time_series = range(188)
     time_series = [ele*0.01 for ele in time_series]
 
     signal_data = [ele*sensitivity for ele in signal_data]
@@ -26,7 +26,7 @@ def signal_arrange(signal_data):
 
 def filter_fir(signal):  # Design of FIR Filter for Smoothing the Signal
 
-    sample_rate = 230.0  # Sample Rate keep as 110Hz because Data Sample Rate is 50 Hz
+    sample_rate = 110.0  # Sample Rate keep as 110Hz because Data Sample Rate is 50 Hz
     nyq_rate = sample_rate / 2.0
 
     width = 10.0 / nyq_rate
@@ -89,7 +89,7 @@ def feature_csv(dc_level, energy_max, energy_min, max_mean, max_std, min_mean, m
     csv_row = [dc_level, energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
                avg_amplitude, signal_power, person]
 
-    csv_file = "intruder.csv"
+    csv_file = "newset.csv"
 
     with open(csv_file, "a") as fp:
         wr = csv.writer(fp, dialect='excel')

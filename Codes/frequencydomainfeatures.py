@@ -10,7 +10,7 @@ from numpy.fft import rfft, fftfreq
 
 def spectral_extracts(filtered_signal):
 
-    sample_time = 0.01
+    sample_time = 0.02
     spectrum = abs(rfft(filtered_signal))
     frequencies = fftfreq(spectrum.size, sample_time)
 

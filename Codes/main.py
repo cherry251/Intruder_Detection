@@ -4,11 +4,12 @@ from pylab import figure, plot, show, grid, stem
 from myfunctions import filter_fir, signal_arrange, feature_csv
 from timedomainfeatures import find_peaks, peaks_energy, peaks_stat, stride_time
 from frequencydomainfeatures import spectral_extracts
+# from training import train_algorithms
 
-Signal_df = pd.read_excel("D:\Academics\EE 405\August Start\Intruder Detection\MLCode\DataFiles\Intruder.xlsx",
+Signal_df = pd.read_excel("D:\Academics\EE 405\August Start\Intruder Detection\MLCode\DataFiles\RawSignals.xlsx",
                           sheet_name=0)
 
-for i in range(6):
+for i in range(28):
 
     SignalData = Signal_df.iloc[0:188, i].values  # Extracting the signal
 
@@ -20,28 +21,32 @@ for i in range(6):
     max_mean, max_std, min_mean, min_std = peaks_stat(y_max, y_min)  # Calculating the means and std. of peaks
     avg_stride_time = stride_time(x_max, x_min)  # Calculating the average time per stride
 
-    person = 5
+    person = 0
 
     # Frequency Domain Features
     norm_spectrum, norm_frequencies, power_spectrum, spec_centroid, avg_amplitude, \
-       signal_power = spectral_extracts(filteredSignal)
+        signal_power = spectral_extracts(filteredSignal)
     # idx = np.argsort(norm_frequencies)
 
     feature_csv(dcLevel, energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
                 avg_amplitude, signal_power, person)
 
-    # figure(i)
+    # train_algorithms('PersonData.csv', 4)
 
-    # plot(Time, Signal)
-    # plot(Time, filteredSignal)
+    figure('Original and Filtered Signal')
+
+    plot(Time, Signal)
+    plot(Time, filteredSignal)
     # plot(x_max, y_max, 'r+')
     # plot(x_min, y_min, 'g+')
 
-    # stem(norm_frequencies, norm_spectrum, 'b')
-    # stem(norm_frequencies, power_spectrum, 'r')
+    figure('Normalized Frequency Spectrum')
+    stem(norm_frequencies, norm_spectrum, 'b')
+    figure('Power Spectral')
+    stem(norm_frequencies, power_spectrum, 'r')
 
-    # grid(True)
-    # show()
+    grid(True)
+    show()
 
 
 
