@@ -89,8 +89,8 @@ def feature_csv(dc_level, energy_max, energy_min, max_mean, max_std, min_mean, m
     csv_row = [dc_level, energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
                avg_amplitude, signal_power, person]
 
-    csv_file = "newset.csv"
+    csv_file = 'newset.csv'
 
-    with open(csv_file, "a") as fp:
+    with open(csv_file, 'a') as fp:
         wr = csv.writer(fp, dialect='excel')
         wr.writerow(csv_row)

@@ -6,7 +6,7 @@ from timedomainfeatures import find_peaks, peaks_energy, peaks_stat, stride_time
 from frequencydomainfeatures import spectral_extracts
 # from training import train_algorithms
 
-Signal_df = pd.read_excel("D:\Academics\EE 405\August Start\Intruder Detection\MLCode\DataFiles\RawSignals.xlsx",
+Signal_df = pd.read_excel("D:\Academics\EE 405\August Start\Intruder Detection\MLCode\DataFiles\RawSignals_I.xlsx",
                           sheet_name=0)
 
 for i in range(28):
@@ -30,8 +30,6 @@ for i in range(28):
 
     feature_csv(dcLevel, energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
                 avg_amplitude, signal_power, person)
-
-    # train_algorithms('PersonData.csv', 4)
 
     figure('Original and Filtered Signal')
 
