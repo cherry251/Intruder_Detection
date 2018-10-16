@@ -9,7 +9,7 @@ from myfunctions import peak_detector
 
 def find_peaks(filtered_signal):
 
-    t = range(188)
+    t = range(400)
     max, min = peak_detector(filtered_signal, 0.0, 0.0005, t)  # Calculating the peaks
     xmax = np.zeros(len(max))  # Maximum indexes
     ymax = np.zeros(len(max))  # Maximum values
@@ -24,8 +24,8 @@ def find_peaks(filtered_signal):
         np.put(xmin, j, min[j][0])
         np.put(ymin, j, min[j][1])
 
-    xmax = [ele*0.02 for ele in xmax]  # Adjusting to time series
-    xmin = [ele*0.02 for ele in xmin]  # Adjusting to time series
+    xmax = [ele*0.01 for ele in xmax]  # Adjusting to time series
+    xmin = [ele*0.01 for ele in xmin]  # Adjusting to time series
 
     return xmax, ymax, xmin, ymin
 

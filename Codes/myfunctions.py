@@ -7,12 +7,16 @@ from scipy.signal import kaiserord, lfilter, firwin
 from math import isnan
 from pylab import *
 import csv
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.neural_network import MLPClassifier
 
 
 def signal_arrange(signal_data):
 
     sensitivity = 0.000125  # V/bit | Convert to a Voltage Signal
-    time_series = range(188)
+    time_series = range(400)
     time_series = [ele*0.01 for ele in time_series]
 
     signal_data = [ele*sensitivity for ele in signal_data]
@@ -26,7 +30,7 @@ def signal_arrange(signal_data):
 
 def filter_fir(signal):  # Design of FIR Filter for Smoothing the Signal
 
-    sample_rate = 110.0  # Sample Rate keep as 110Hz because Data Sample Rate is 50 Hz
+    sample_rate = 220.0
     nyq_rate = sample_rate / 2.0
 
     width = 10.0 / nyq_rate
@@ -89,8 +93,72 @@ def feature_csv(dc_level, energy_max, energy_min, max_mean, max_std, min_mean, m
     csv_row = [dc_level, energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
                avg_amplitude, signal_power, person]
 
-    csv_file = 'newset.csv'
+    csv_file = 'Features_5.csv'
 
     with open(csv_file, 'a') as fp:
         wr = csv.writer(fp, dialect='excel')
         wr.writerow(csv_row)
+
+
+def knn_classifier(x_train, x_test, y_train, y_test):
+
+    knn = KNeighborsClassifier()
+    knn.fit(x_train, y_train)
+
+    training_accuracy = knn.score(x_train, y_train)
+    test_accuracy = knn.score(x_test, y_test)
+
+    training_probability = knn.predict_proba(x_train[:5])
+    test_probability = knn.predict_proba(x_test[:5])
+
+    return training_accuracy, test_accuracy, training_probability, test_probability
+
+
+def dt_classifier(x_train, x_test, y_train, y_test):
+
+    tree = DecisionTreeClassifier(random_state=42)
+    tree.fit(x_train, y_train)
+
+    training_accuracy = tree.score(x_train, y_train)
+    test_accuracy = tree.score(x_test, y_test)
+
+    training_probability = tree.predict_proba(x_train[:5])
+    test_probability = tree.predict_proba(x_test[:5])
+
+    return training_accuracy, test_accuracy, training_probability, test_probability
+
+
+def svm_classifier(x_train, x_test, y_train, y_test):
+
+    svm = SVC(random_state=42)
+    svm.fit(x_train, y_train)
+
+    min_train = x_train.min(axis=0)
+    range_train = (x_train - min_train).max(axis=0)
+    x_train_scaled = (x_train - min_train)/range_train
+    x_test_scaled = (x_test - min_train)/range_train
+
+    training_accuracy = svm.score(x_train_scaled, y_train)
+    test_accuracy = svm.score(x_test_scaled, y_test)
+
+    # training_probability = svm.predict_proba(x_train_scaled[:5])
+    # test_probability = svm.predict_proba(x_test_scaled[:5])
+
+    return training_accuracy, test_accuracy
+
+
+def nn_classifier(x_train, x_test, y_train, y_test):
+
+    nn = MLPClassifier(random_state=42)
+    nn.fit(x_train, y_train)
+
+    training_accuracy = nn.score(x_train, y_train)
+    test_accuracy = nn.score(x_test, y_test)
+
+    training_probability = nn.predict_proba(x_train[:5])
+    test_probability = nn.predict_proba(x_test[:5])
+
+    return training_accuracy, test_accuracy, training_probability, test_probability
+
+
+
