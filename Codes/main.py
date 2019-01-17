@@ -30,13 +30,12 @@ for i in range(50):
     feature_csv(dcLevel, energy_max, energy_min, max_mean, max_std, min_mean, min_std, avg_stride_time, spec_centroid,
                 avg_amplitude, signal_power, person)
 
-"""
     figure('Original and Filtered Signal')
 
     plot(Time, Signal)
     plot(Time, filteredSignal)
-    # plot(x_max, y_max, 'r+')
-    # plot(x_min, y_min, 'g+')
+    plot(x_max, y_max, 'r+')
+    plot(x_min, y_min, 'g+')
 
     figure('Normalized Frequency Spectrum')
     stem(norm_frequencies, norm_spectrum, 'b')
@@ -45,7 +44,6 @@ for i in range(50):
 
     grid(True)
     show()
-"""
 
 
 
